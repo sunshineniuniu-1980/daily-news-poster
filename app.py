@@ -5,12 +5,17 @@ import textwrap
 
 # 1. AI 配置
 try:
+    # 强制指定 API 密钥
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    model = genai.GenerativeModel('models/gemini-1.5-flash')
+    
+    # 建议先尝试使用 gemini-pro，它是目前最兼容的版本
+    model_name = 'gemini-pro' 
+    model = genai.GenerativeModel(model_name)
+    
+    # 测试一下连接是否正常
+    st.sidebar.success(f"已连接至模型: {model_name}")
 except Exception as e:
-    st.error(f"API配置失败，请检查Secrets: {e}")
-
-st.title("🎨 财经英语·小红书海报生成器")
+    st.error(f"API配置失败: {e}")
 
 # 2. 输入区域
 english_text = st.text_area("1. 粘贴英文新闻原文：", height=250, placeholder="在此处粘贴英文内容...")
