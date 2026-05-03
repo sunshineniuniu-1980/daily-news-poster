@@ -53,10 +53,8 @@ if st.button("🚀 开始全自动生成海报"):
                 1. 翻译成地道、优雅的中文（适合小红书财经博主风格）。
                 2. 提取3-5个核心关键词或短语，给出中文解析。
                 格式要求：
-                [TRANS]
-                (只写翻译内容)
-                [VOCAB]
-                (只写单词解析，每行一个)
+                - 翻译内容请【务必保留原有的分段】，段落之间加一个空行。
+                - 使用 [TRANS] 和 [VOCAB] 标签包裹。
                 
                 原文：{english_text}
                 """
@@ -89,10 +87,20 @@ if st.button("🚀 开始全自动生成海报"):
                 # B. 绘制翻译部分
                 draw.text((80, 320), "【 深度翻译 】", font=font_title, fill=COLOR_TITLE)
                 y_cursor = 420
-                # textwrap.wrap 自动处理换行，width=22指每行大约22个汉字
-                for line in textwrap.wrap(trans_content, width=22):
-                    draw.text((80, y_cursor), line, font=font_main, fill=COLOR_TEXT)
-                    y_cursor += 70
+                
+                # 先按换行符切分段落
+                paragraphs = trans_content.split('\n')
+                for para in paragraphs:
+                    if not para.strip(): # 如果是空行
+                        y_cursor += 30   # 额外增加一段间距
+                        continue
+                    
+                    # 对每个段落进行自动换行
+                    lines = textwrap.wrap(para, width=24)
+                    for line in lines:
+                        draw.text((80, y_cursor), line, font=font_main, fill=COLOR_TEXT)
+                        y_cursor += 70
+                    y_cursor += 20 # 段落末尾稍微留一点缝隙
                 
                 # C. 绘制词汇部分
                 y_cursor += 80
