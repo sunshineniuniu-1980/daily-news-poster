@@ -6,7 +6,7 @@ import textwrap
 # 1. AI 配置
 try:
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('models/gemini-1.5-flash')
 except Exception as e:
     st.error(f"API配置失败，请检查Secrets: {e}")
 
