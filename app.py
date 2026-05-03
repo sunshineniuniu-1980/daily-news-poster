@@ -59,7 +59,26 @@ if st.button("全自动生成海报"):
             img = Image.new('RGB', (width, height), color=(255, 255, 255))
             draw = ImageDraw.Draw(img)
             
-            # 这里的绘图需要字体，请看下文说明
+            # --- 在这里添加加载字体的命令 ---
+            # 定义字体路径和大小（40是字号，你可以根据需要调整）
+            font_path = "SimHei.ttf" 
+            font_main = ImageFont.truetype(font_path, 40)
+            font_title = ImageFont.truetype(font_path, 60)
+            # ------------------------------
+
+            # 绘制背景色块
             draw.rectangle([0, 0, 1200, 300], fill=(40, 44, 52))
+
+            # --- 在这里使用字体画出文字 ---
+            # 这里的 (100, 400) 是文字在图片上的坐标
+            draw.text((100, 350), "AI 翻译结果：", font=font_title, fill=(230, 70, 70))
+            
+            # 使用 textwrap 处理长文字换行
+            lines = textwrap.wrap(translation, width=25) # 25是指每行大约多少个中文字
+            y_text = 450
+            for line in lines:
+                draw.text((100, y_text), line, font=font_main, fill=(0, 0, 0))
+                y_text += 60 # 每行行间距
+            # ------------------------------
             
             st.image(img, caption="海报预览", use_column_width=True)
