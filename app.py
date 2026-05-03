@@ -6,7 +6,7 @@ import textwrap
 # 1. AI 配置
 try:
     # 强制指定 API 密钥
-    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+    genai.configure(api_key=st.secrets["AIzaSyDjovJppAsFrfNgf3IvYSTU2jk5HcmP3d8"])
     
     # 建议先尝试使用 gemini-pro，它是目前最兼容的版本
     model_name = 'gemini-pro' 
