@@ -18,7 +18,7 @@ try:
     genai.configure(api_key=api_key_val)
     
     # 使用兼容性最强的模型
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('models/gemini-1.5-flash')
     st.sidebar.success("✅ AI 引擎已就绪")
 except Exception as e:
     st.error(f"❌ API配置失败，请检查Secrets设置: {e}")
