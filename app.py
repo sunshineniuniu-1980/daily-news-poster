@@ -113,11 +113,13 @@ if st.button("🚀 开始全自动生成海报"):
                 
                 def draw_section(text_block, current_y, fill_color):
                     paras = text_block.split('\n')
-                    for para in paragraphs_in_block := text_block.split('\n'):
+                    for para in paras:
                         if not para.strip():
                             current_y += 30 # 段落间的空行间距
                             continue
-                        lines = textwrap.wrap(para, width=chars_per_line)
+                            
+                        # 每一行显示 35 个字符    
+                        lines = textwrap.wrap(para, width=35)
                         for line in lines:
                             draw.text((80, current_y), line, font=font_main, fill=fill_color)
                             current_y += line_height
