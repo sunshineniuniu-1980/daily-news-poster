@@ -68,8 +68,9 @@ if st.button("🚀 开始全自动生成海报"):
                 vocab_content = full_text.split("[VOCAB]")[1].strip()
 
                 # 2. 【核心逻辑】预计算文字行数以确定图片高度
-                font_main_size = 42
-                line_height = 70
+                font_main_size = 32
+                line_height = 55
+                chars_per_line = 35      # 每行显示约35个汉字
                 padding = 450 # 顶部和底部的留白总和
                 
                 # 模拟换行处理，计算总行数
@@ -80,7 +81,7 @@ if st.button("🚀 开始全自动生成海报"):
                     if not para.strip():
                         all_lines_count += 1 # 空行占位
                     else:
-                        wrapped = textwrap.wrap(para, width=24)
+                        wrapped = textwrap.wrap(para, width=chars_per_line)
                         all_lines_count += len(wrapped)
                 
                 # 动态计算高度：行数 * 行高 + 额外预留空间
@@ -94,7 +95,7 @@ if st.button("🚀 开始全自动生成海报"):
                 
                 # 加载字体
                 try:
-                    font_title = ImageFont.truetype(FONT_FILE, 60)
+                    font_title = ImageFont.truetype(FONT_FILE, 55)
                     font_main = ImageFont.truetype(FONT_FILE, font_main_size)
                     font_logo = ImageFont.truetype(FONT_FILE, 70)
                 except:
@@ -112,15 +113,15 @@ if st.button("🚀 开始全自动生成海报"):
                 
                 def draw_section(text_block, current_y, fill_color):
                     paras = text_block.split('\n')
-                    for para in paras:
+                    for para in paragraphs_in_block := text_block.split('\n'):
                         if not para.strip():
-                            current_y += 40 # 段落间的空行间距
+                            current_y += 30 # 段落间的空行间距
                             continue
-                        lines = textwrap.wrap(para, width=24)
+                        lines = textwrap.wrap(para, width=chars_per_line)
                         for line in lines:
                             draw.text((80, current_y), line, font=font_main, fill=fill_color)
                             current_y += line_height
-                        current_y += 20 # 段落后的微调间距
+                        current_y += 15 # 段落后的微调间距
                     return current_y
 
                 # 绘制正文
