@@ -68,10 +68,11 @@ if st.button("🚀 开始全自动生成海报"):
                 vocab_content = full_text.split("[VOCAB]")[1].strip()
 
                 # 2. 【核心逻辑】预计算文字行数以确定图片高度
-                font_main_size = 32
-                line_height = 55
-                chars_per_line = 35      # 每行显示约35个汉字
-                padding = 450 # 顶部和底部的留白总和
+                font_main_size = 30
+                line_height = 52
+                chars_per_line = 32      # 每行显示约32个汉字
+                left_margin = 110        # 将左边距从 80 增加到 110，实现视觉居中
+                padding = 450
                 
                 # 模拟换行处理，计算总行数
                 all_lines_count = 0
@@ -92,6 +93,9 @@ if st.button("🚀 开始全自动生成海报"):
                 width = 1200
                 img = Image.new('RGB', (width, img_height), color=COLOR_BG)
                 draw = ImageDraw.Draw(img)
+                font_title = ImageFont.truetype(FONT_FILE, 55)
+                font_main = ImageFont.truetype(FONT_FILE, font_main_size)
+                font_logo = ImageFont.truetype(FONT_FILE, 70)
                 
                 # 加载字体
                 try:
@@ -119,9 +123,9 @@ if st.button("🚀 开始全自动生成海报"):
                             continue
                             
                         # 每一行显示 35 个字符    
-                        lines = textwrap.wrap(para, width=35)
+                        lines = textwrap.wrap(para, width=32)
                         for line in lines:
-                            draw.text((80, current_y), line, font=font_main, fill=fill_color)
+                            draw.text((left_margin, current_y), line, font=font_main, fill=fill_color)
                             current_y += line_height
                         current_y += 15 # 段落后的微调间距
                     return current_y
